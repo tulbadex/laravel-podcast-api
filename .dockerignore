@@ -1,0 +1,17 @@
+**/.git
+**/node_modules
+**/vendor
+**/storage/*
+!**/storage/app/public
+**/bootstrap/cache
+**/.env
+**/.idea
+**/.vscode
+**/docker-compose.override.yml
+**/*.log
+**/*.sqlite
+**/Thumbs.db
+**/.DS_Store
+**/desktop.ini
+**/composer.lock
+**/package-lock.json

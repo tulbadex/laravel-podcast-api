@@ -1,0 +1,765 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Podcast Platform API",
+        "description": "API documentation for the Podcast Platform",
+        "contact": {
+            "name": "API Support",
+            "email": "support@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "API Server"
+        },
+        {
+            "url": "/"
+        }
+    ],
+    "paths": {
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get all categories",
+                "operationId": "ac9c4d978ea4e5b72915ca9728e5b8b1",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create a new category",
+                "operationId": "cca49a87d9b0ebb9a98ad7c154b71737",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/categories/featured": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get featured categories",
+                "operationId": "2511468173f31ab58058f5515d5a6724",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get category by ID",
+                "operationId": "09767bb2e47dde77dd1e2591428b0ae1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Update a category",
+                "operationId": "7dcf71887e585de7f881e9eb98d86126",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category updated successfully"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Delete a category",
+                "operationId": "9b61b65823f4a21f182506b34ddf805c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category deleted successfully"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            }
+        },
+        "/api/episodes": {
+            "get": {
+                "tags": [
+                    "Episodes"
+                ],
+                "summary": "Get all episodes",
+                "operationId": "7ec4c2e40b12c6630cbd49f872f4e1b0",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "title",
+                                "published_at"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Episodes"
+                ],
+                "summary": "Create a new episode",
+                "operationId": "7065efab022e9b074c3a726627738807",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EpisodeRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Episode created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/episodes/featured": {
+            "get": {
+                "tags": [
+                    "Episodes"
+                ],
+                "summary": "Get featured episodes",
+                "operationId": "e48e5eff44ec6de5a46e885824a5f2f9",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/episodes/latest": {
+            "get": {
+                "tags": [
+                    "Episodes"
+                ],
+                "summary": "Get latest episodes",
+                "operationId": "bbd8f024df240caf1e85cf00b70328dd",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/episodes/podcast/{podcastId}": {
+            "get": {
+                "tags": [
+                    "Episodes"
+                ],
+                "summary": "Get episodes by podcast",
+                "operationId": "7175aaf8eb27ae349fbd0595ace2aed4",
+                "parameters": [
+                    {
+                        "name": "podcastId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/episodes/{id}": {
+            "get": {
+                "tags": [
+                    "Episodes"
+                ],
+                "summary": "Get episode by ID",
+                "operationId": "63a3e519f54b01e580838484e0fda9a7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Episode not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Episodes"
+                ],
+                "summary": "Update an episode",
+                "operationId": "8b4d5c28eb0ecdbfad25d7fdf698c6ff",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EpisodeRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Episode updated successfully"
+                    },
+                    "404": {
+                        "description": "Episode not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Episodes"
+                ],
+                "summary": "Delete an episode",
+                "operationId": "8c197969b100927e1cd46c23d988b945",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Episode deleted successfully"
+                    },
+                    "404": {
+                        "description": "Episode not found"
+                    }
+                }
+            }
+        },
+        "/api/podcasts": {
+            "get": {
+                "tags": [
+                    "Podcasts"
+                ],
+                "summary": "Get all podcasts",
+                "operationId": "74471147bb5a65d449b5357445399019",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "title",
+                                "rating",
+                                "created_at"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Podcasts"
+                ],
+                "summary": "Create a new podcast",
+                "operationId": "b653b8c06d3bde71f8996de1f4b426ff",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PodcastRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Podcast created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/podcasts/featured": {
+            "get": {
+                "tags": [
+                    "Podcasts"
+                ],
+                "summary": "Get featured podcasts",
+                "operationId": "21c78bd46ea6eab056f011d106cc0d0b",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/podcasts/category/{categoryId}": {
+            "get": {
+                "tags": [
+                    "Podcasts"
+                ],
+                "summary": "Get podcasts by category",
+                "operationId": "1a894b3e4669f1c23259e196d12a3bfd",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/podcasts/search": {
+            "get": {
+                "tags": [
+                    "Podcasts"
+                ],
+                "summary": "Search podcasts",
+                "operationId": "5469c2bf94ab12401a6f4ffface1fb67",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/podcasts/{id}": {
+            "get": {
+                "tags": [
+                    "Podcasts"
+                ],
+                "summary": "Get podcast by ID",
+                "operationId": "e313077915b72667e295fc651f1aa955",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Podcast not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Podcasts"
+                ],
+                "summary": "Update a podcast",
+                "operationId": "9cf5198706fcc4e2630ab52034048de9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PodcastRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Podcast updated successfully"
+                    },
+                    "404": {
+                        "description": "Podcast not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Podcasts"
+                ],
+                "summary": "Delete a podcast",
+                "operationId": "ad34860ba7e2917accdf74ad7558b605",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Podcast deleted successfully"
+                    },
+                    "404": {
+                        "description": "Podcast not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CategoryRequest": {
+                "title": "Category Request",
+                "required": [
+                    "name",
+                    "slug"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Technology"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "technology"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Technology podcasts"
+                    },
+                    "image": {
+                        "type": "string",
+                        "example": "categories/tech.jpg"
+                    },
+                    "featured": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "EpisodeRequest": {
+                "title": "Episode Request",
+                "required": [
+                    "podcast_id",
+                    "title",
+                    "slug",
+                    "description",
+                    "audio_url",
+                    "duration_in_seconds",
+                    "published_at"
+                ],
+                "properties": {
+                    "podcast_id": {
+                        "type": "string",
+                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Introduction to AI"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "introduction-to-ai"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "An episode about artificial intelligence"
+                    },
+                    "audio_url": {
+                        "type": "string",
+                        "example": "episodes/ai-intro.mp3"
+                    },
+                    "duration_in_seconds": {
+                        "type": "integer",
+                        "example": 1800
+                    },
+                    "published_at": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2023-01-15"
+                    },
+                    "featured": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "guest_name": {
+                        "type": "string",
+                        "example": "Jane Smith"
+                    }
+                },
+                "type": "object"
+            },
+            "PodcastRequest": {
+                "title": "Podcast Request",
+                "required": [
+                    "title",
+                    "slug",
+                    "description",
+                    "category_id",
+                    "author"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Tech Talk"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "example": "tech-talk"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "A podcast about technology"
+                    },
+                    "image": {
+                        "type": "string",
+                        "example": "podcasts/tech-talk.jpg"
+                    },
+                    "category_id": {
+                        "type": "string",
+                        "example": "550e8400-e29b-41d4-a716-446655440000"
+                    },
+                    "author": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "language": {
+                        "type": "string",
+                        "example": "English"
+                    },
+                    "featured": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "rating": {
+                        "type": "integer",
+                        "example": 4
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Categories",
+            "description": "Categories"
+        },
+        {
+            "name": "Episodes",
+            "description": "Episodes"
+        },
+        {
+            "name": "Podcasts",
+            "description": "Podcasts"
+        }
+    ]
+}

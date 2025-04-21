@@ -1,0 +1,82 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: podcast_app
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html:cached
+      - ./php/local.ini:/usr/local/etc/php/php.ini
+    networks:
+      - podcast_network
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    ports:
+      - "8000:80"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  db:
+    image: mysql:8.0
+    container_name: podcast_db
+    restart: unless-stopped
+    volumes:
+      - ./data/conf.d:/etc/mysql/conf.d
+      - ./data/logs:/logs
+      - mysql_data:/var/lib/mysql
+    networks:
+      - podcast_network
+    ports:
+      - "3307:3306" # External:3307 -> Internal:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+  redis:
+    image: redis:alpine
+    container_name: podcast_redis
+    restart: unless-stopped
+    networks:
+      - podcast_network
+    ports:
+      - "6379:6379"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: podcast_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: ${DB_HOST}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      PMA_PORT: ${DB_PORT}
+    networks:
+      - podcast_network
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
+networks:
+  podcast_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
