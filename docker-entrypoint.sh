@@ -8,6 +8,14 @@ log_message() {
     echo "$(date +'%Y-%m-%d %T') - $1"
 }
 
+# Fix permissions FIRST
+log_message "Setting initial permissions..."
+mkdir -p storage/framework/{cache,sessions,views}
+mkdir -p storage/logs
+mkdir -p bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+
 # Wait for database to be ready
 log_message "Waiting for database..."
 max_retries=30

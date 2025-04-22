@@ -6,7 +6,7 @@ services:
     container_name: podcast_app
     restart: unless-stopped
     volumes:
-      - .:/var/www/html:cached
+      - ./:/var/www/html:cached
       - ./php/local.ini:/usr/local/etc/php/php.ini
     networks:
       - podcast_network
