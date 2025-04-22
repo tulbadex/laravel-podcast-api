@@ -8,13 +8,19 @@ log_message() {
     echo "$(date +'%Y-%m-%d %T') - $1"
 }
 
-# Fix permissions FIRST
-log_message "Setting initial permissions..."
+# Create directories and set permissions FIRST
+log_message "Setting up directories and permissions..."
 mkdir -p storage/framework/{cache,sessions,views}
 mkdir -p storage/logs
 mkdir -p bootstrap/cache
+
+# Set ownership to www-data (inside container)
 chown -R www-data:www-data storage bootstrap/cache
 chmod -R 775 storage bootstrap/cache
+
+# Fix potential permission issues with mounted volumes
+chown -R www-data:www-data storage/logs
+chmod -R 775 storage/logs
 
 # Wait for database to be ready
 log_message "Waiting for database..."
@@ -47,9 +53,9 @@ php artisan view:cache
 php artisan route:cache
 
 # Fix permissions
-log_message "Setting permissions..."
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# log_message "Setting permissions..."
+# chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Start Apache
 log_message "Starting Apache..."
