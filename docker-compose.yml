@@ -8,7 +8,6 @@ services:
     volumes:
       - ./:/var/www/html:cached
       - ./php/local.ini:/usr/local/etc/php/php.ini
-    user: "www-data"
     networks:
       - podcast_network
     depends_on:

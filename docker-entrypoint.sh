@@ -8,19 +8,14 @@ log_message() {
     echo "$(date +'%Y-%m-%d %T') - $1"
 }
 
-# Create directories and set permissions FIRST
+# Create directories and set permissions
 log_message "Setting up directories and permissions..."
 mkdir -p storage/framework/{cache,sessions,views}
 mkdir -p storage/logs
 mkdir -p bootstrap/cache
 
-# Set ownership to www-data (inside container)
-chown -R www-data:www-data storage bootstrap/cache
+# Only set permissions (don't change ownership of host-mounted volumes)
 chmod -R 775 storage bootstrap/cache
-
-# Fix potential permission issues with mounted volumes
-chown -R www-data:www-data storage/logs
-chmod -R 775 storage/logs
 
 # Wait for database to be ready
 log_message "Waiting for database..."
@@ -42,20 +37,15 @@ if [ $count -eq $max_retries ]; then
     exit 1
 fi
 
-# First run migrations to create database tables
+# Run Laravel migrations
 log_message "Running migrations..."
 php artisan migrate --force
 
-# Only then run optimizations
+# Run Laravel optimizations
 log_message "Running Laravel optimizations..."
 php artisan config:cache
 php artisan view:cache
 php artisan route:cache
-
-# Fix permissions
-# log_message "Setting permissions..."
-# chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-# chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Start Apache
 log_message "Starting Apache..."
