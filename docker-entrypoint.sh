@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd /var/www/html
+# cd /var/www/html
 
 # Function for logging
 log_message() {
@@ -10,12 +10,12 @@ log_message() {
 
 # Create directories and set permissions
 log_message "Setting up directories and permissions..."
-mkdir -p storage/framework/{cache,sessions,views}
-mkdir -p storage/logs
-mkdir -p bootstrap/cache
+# mkdir -p storage/framework/{cache,sessions,views}
+# mkdir -p storage/logs
+# mkdir -p bootstrap/cache
 
 # Only set permissions (don't change ownership of host-mounted volumes)
-chmod -R 775 storage bootstrap/cache
+# chmod -R 775 storage bootstrap/cache
 
 # Wait for database to be ready
 log_message "Waiting for database..."
